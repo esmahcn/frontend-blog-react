@@ -1,8 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const BlogForm = ({ addBlog }) => {
+const BlogForm = ({ addBlog, editingBlog }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+
+  // Load blog data when editing
+  useEffect(() => {
+    if (editingBlog) {
+      setTitle(editingBlog.title);
+      setDescription(editingBlog.description);
+    } else {
+      setTitle("");
+      setDescription("");
+    }
+  }, [editingBlog]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,7 +26,7 @@ const BlogForm = ({ addBlog }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Add a Blog</h2>
+      <h2>{editingBlog ? "Edit Blog" : "Add a Blog"}</h2>
       <input
         type="text"
         placeholder="Blog title"
@@ -28,7 +39,7 @@ const BlogForm = ({ addBlog }) => {
         onChange={(e) => setDescription(e.target.value)}
         rows={4}
       />
-      <button type="submit">Add Blog</button>
+      <button type="submit">{editingBlog ? "Update Blog" : "Add Blog"}</button>
     </form>
   );
 };
