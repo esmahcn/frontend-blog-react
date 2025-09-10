@@ -13,7 +13,7 @@ const BlogList = ({ blogs, removeBlog, editBlog }) => {
           className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition transform hover:-translate-y-1"
         >
           <h2 className="text-2xl font-semibold mb-3">{blog.title}</h2>
-          <p className="text-gray-700 mb-4">{blog.content}</p>
+          <p className="text-gray-700 mb-4">{blog.description}</p>
           <div className="flex space-x-3">
             <button
               onClick={() => editBlog(blog)}

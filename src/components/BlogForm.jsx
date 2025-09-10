@@ -2,25 +2,25 @@ import React, { useState, useEffect } from "react";
 
 const BlogForm = ({ addBlog, editingBlog }) => {
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [description, setDescription] = useState("");
 
   // Fill form when editing
   useEffect(() => {
     if (editingBlog) {
       setTitle(editingBlog.title);
-      setContent(editingBlog.content);
+      setDescription(editingBlog.description);
     } else {
       setTitle("");
-      setContent("");
+      setDescription("");
     }
   }, [editingBlog]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!title || !content) return; // basic validation
-    addBlog({ title, content });
+    if (!title || !description) return; // basic validation
+    addBlog({ title, description });
     setTitle("");
-    setContent("");
+    setDescription("");
   };
 
   return (
@@ -41,9 +41,9 @@ const BlogForm = ({ addBlog, editingBlog }) => {
       />
 
       <textarea
-        placeholder="Blog Content"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
+        placeholder="Blog Description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
         className="w-full p-3 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500"
         rows={5}
       />

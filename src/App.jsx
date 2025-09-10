@@ -11,7 +11,6 @@ function App() {
       <Route path="/" element={<HomePage />} />
 
       {/* Blogs page showing all blogs */}
-        <Route path="/" element={<HomePage />} />
       <Route path="/blogs" element={<BlogsPage />} />
        <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
