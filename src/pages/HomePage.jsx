@@ -8,6 +8,8 @@ const HomePage = () => {
   const [blogs, setBlogs] = useState([]);
   const [editingBlog, setEditingBlog] = useState(null);
 
+  const user = JSON.parse(localStorage.getItem("user")); // logged-in user
+
   useEffect(() => {
     fetchBlogs();
   }, []);
@@ -23,12 +25,16 @@ const HomePage = () => {
 
   const addBlog = async (blog) => {
     try {
+      if (!user) return alert("You must login to add a blog");
+
+      const res = editingBlog
+        ? await updateBlog(editingBlog._id, blog)
+        : await createBlog(blog);
+
       if (editingBlog) {
-        const res = await updateBlog(editingBlog._id, blog);
         setBlogs(blogs.map((b) => (b._id === editingBlog._id ? res.data : b)));
         setEditingBlog(null);
       } else {
-        const res = await createBlog(blog);
         setBlogs([...blogs, res.data]);
       }
     } catch (err) {
@@ -49,8 +55,16 @@ const HomePage = () => {
   return (
     <>
       <Navbar />
+
       <div className="max-w-4xl mx-auto px-4 pt-28 md:pt-32">
-        <BlogForm addBlog={addBlog} editingBlog={editingBlog} />
+        {!user ? (
+          <p className="text-center text-gray-700 text-lg mb-6">
+            Welcome! Please login to add your blogs.
+          </p>
+        ) : (
+          <BlogForm addBlog={addBlog} editingBlog={editingBlog} />
+        )}
+
         <BlogList blogs={blogs} removeBlog={removeBlog} editBlog={editBlog} />
       </div>
     </>

@@ -4,53 +4,54 @@ const BlogForm = ({ addBlog, editingBlog }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  // Fill form when editing
   useEffect(() => {
     if (editingBlog) {
       setTitle(editingBlog.title);
       setDescription(editingBlog.description);
-    } else {
-      setTitle("");
-      setDescription("");
     }
   }, [editingBlog]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!title || !description) return; // basic validation
-    addBlog({ title, description });
+    const user = JSON.parse(localStorage.getItem("user")); // get logged-in user
+    if (!user) {
+      alert("You must login first");
+      return;
+    }
+
+    addBlog({
+      title,
+      description,
+      user: user.id, // 👈 attach user id
+    });
+
     setTitle("");
     setDescription("");
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-white p-6 rounded-lg shadow-md mb-6"
-    >
+    <form onSubmit={handleSubmit} className="mb-8 bg-gray-100 p-6 rounded-lg shadow">
       <h2 className="text-xl font-semibold mb-4">
         {editingBlog ? "Edit Blog" : "Add New Blog"}
       </h2>
-
       <input
         type="text"
         placeholder="Blog Title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        className="w-full p-3 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500"
+        className="w-full mb-4 px-3 py-2 border rounded"
+        required
       />
-
       <textarea
         placeholder="Blog Description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
-        className="w-full p-3 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500"
-        rows={5}
-      />
-
+        className="w-full mb-4 px-3 py-2 border rounded"
+        required
+      ></textarea>
       <button
         type="submit"
-        className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition-colors"
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
       >
         {editingBlog ? "Update Blog" : "Add Blog"}
       </button>
