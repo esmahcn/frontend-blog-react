@@ -5,6 +5,7 @@ import BlogsPage from "./pages/BlogsPage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
   // 1️⃣ Add token state
@@ -18,6 +19,7 @@ function App() {
       <Route path="/about" element={<AboutPage />} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/login" element={<LoginPage setToken={setToken} />} /> 
+      <Route path="/register" element={<RegisterPage />} />
     </Routes>
   );
 }

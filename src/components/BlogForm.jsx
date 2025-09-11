@@ -13,7 +13,7 @@ const BlogForm = ({ addBlog, editingBlog }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const user = JSON.parse(localStorage.getItem("user")); // get logged-in user
+    const user = JSON.parse(localStorage.getItem("user")); // المستخدم الحالي
     if (!user) {
       alert("You must login first");
       return;
@@ -22,7 +22,7 @@ const BlogForm = ({ addBlog, editingBlog }) => {
     addBlog({
       title,
       description,
-      user: user.id, // 👈 attach user id
+      user: user.id, // إرفاق معرف المستخدم
     });
 
     setTitle("");

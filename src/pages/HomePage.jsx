@@ -8,7 +8,7 @@ const HomePage = () => {
   const [blogs, setBlogs] = useState([]);
   const [editingBlog, setEditingBlog] = useState(null);
 
-  const user = JSON.parse(localStorage.getItem("user")); // logged-in user
+  const user = JSON.parse(localStorage.getItem("user")); // المستخدم الحالي
 
   useEffect(() => {
     fetchBlogs();
@@ -43,6 +43,7 @@ const HomePage = () => {
   };
 
   const editBlog = (blog) => setEditingBlog(blog);
+
   const removeBlog = async (id) => {
     try {
       await deleteBlog(id);

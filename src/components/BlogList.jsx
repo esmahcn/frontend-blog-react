@@ -1,7 +1,7 @@
 import React from "react";
 
 const BlogList = ({ blogs = [], removeBlog, editBlog }) => {
-  const storedUser = JSON.parse(localStorage.getItem("user")); // user saved at login
+  const storedUser = JSON.parse(localStorage.getItem("user")); // المستخدم المسجل دخول
   const userId = storedUser?.id;
 
   return (
@@ -18,6 +18,7 @@ const BlogList = ({ blogs = [], removeBlog, editBlog }) => {
           <h2 className="text-2xl font-semibold mb-3">{blog.title}</h2>
           <p className="text-gray-700 mb-4">{blog.description}</p>
 
+          {/* أزرار التعديل والحذف تظهر فقط للمالك */}
           {blog.user && blog.user._id === userId && (
             <div className="flex space-x-3">
               <button

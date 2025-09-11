@@ -5,30 +5,59 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
-  const token = localStorage.getItem("token");
-  const user = JSON.parse(localStorage.getItem("user"));
+  const token = localStorage.getItem("token"); // تحقق من تسجيل الدخول
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    navigate("/"); // redirect to home after logout
+    localStorage.removeItem("user"); // حذف بيانات المستخدم
+    window.location.reload(); // إعادة تحميل الصفحة الرئيسية
   };
 
   return (
     <nav className="bg-gray-800 fixed w-full z-50 shadow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+        {/* Left Links */}
         <ul className="hidden md:flex space-x-6">
-          <li><Link to="/" className="text-white hover:text-gray-300">Home</Link></li>
-          <li><Link to="/blogs" className="text-white hover:text-gray-300">Blogs</Link></li>
+          <li>
+            <Link to="/" className="text-white hover:text-gray-300">
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link to="/blogs" className="text-white hover:text-gray-300">
+              Blogs
+            </Link>
+          </li>
         </ul>
 
+        {/* Logo Center */}
         <div className="text-white text-2xl font-bold">MyBlog</div>
 
+        {/* Right Links */}
         <ul className="hidden md:flex space-x-6">
-          <li><Link to="/about" className="text-white hover:text-gray-300">About</Link></li>
-          <li><Link to="/contact" className="text-white hover:text-gray-300">Contact</Link></li>
+          <li>
+            <Link to="/about" className="text-white hover:text-gray-300">
+              About
+            </Link>
+          </li>
+          <li>
+            <Link to="/contact" className="text-white hover:text-gray-300">
+              Contact
+            </Link>
+          </li>
           {!token ? (
-            <li><Link to="/login" className="text-white hover:text-gray-300">Login</Link></li>
+            <>
+              <li>
+                <Link to="/login" className="text-white hover:text-gray-300">
+                  Login
+                </Link>
+              </li>
+              <li>
+                <Link to="/register" className="text-white hover:text-gray-300">
+                  Register
+                </Link>
+              </li>
+            </>
           ) : (
             <li>
               <button
@@ -41,33 +70,73 @@ const Navbar = () => {
           )}
         </ul>
 
+        {/* Mobile Hamburger */}
         <div className="md:hidden flex items-center">
-          <button onClick={() => setIsOpen(!isOpen)} className="text-gray-300 focus:outline-none">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="text-gray-300 focus:outline-none"
+          >
             {isOpen ? (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/>
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             ) : (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"/>
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               </svg>
             )}
           </button>
         </div>
       </div>
 
+      {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-gray-700 px-4 pt-2 pb-4 space-y-2 mb-4">
-          <Link to="/" className="block text-white hover:text-gray-300" onClick={() => setIsOpen(false)}>Home</Link>
-          <Link to="/blogs" className="block text-white hover:text-gray-300" onClick={() => setIsOpen(false)}>Blogs</Link>
-          <Link to="/about" className="block text-white hover:text-gray-300" onClick={() => setIsOpen(false)}>About</Link>
-          <Link to="/contact" className="block text-white hover:text-gray-300" onClick={() => setIsOpen(false)}>Contact</Link>
+        <div className="md:hidden bg-gray-700 px-2 pt-2 pb-3 space-y-1">
+          <Link to="/" className="block text-white py-2 px-3 hover:bg-gray-600 rounded">
+            Home
+          </Link>
+          <Link to="/blogs" className="block text-white py-2 px-3 hover:bg-gray-600 rounded">
+            Blogs
+          </Link>
+          <Link to="/about" className="block text-white py-2 px-3 hover:bg-gray-600 rounded">
+            About
+          </Link>
+          <Link to="/contact" className="block text-white py-2 px-3 hover:bg-gray-600 rounded">
+            Contact
+          </Link>
           {!token ? (
-            <Link to="/login" className="block text-white hover:text-gray-300" onClick={() => setIsOpen(false)}>Login</Link>
+            <>
+              <Link to="/login" className="block text-white py-2 px-3 hover:bg-gray-600 rounded">
+                Login
+              </Link>
+              <Link to="/register" className="block text-white py-2 px-3 hover:bg-gray-600 rounded">
+                Register
+              </Link>
+            </>
           ) : (
             <button
-              onClick={() => { handleLogout(); setIsOpen(false); }}
-              className="block text-white hover:text-gray-300 w-full text-left"
+              onClick={handleLogout}
+              className="w-full text-left text-white py-2 px-3 hover:bg-gray-600 rounded"
             >
               Logout
             </button>
